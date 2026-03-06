@@ -1,0 +1,10 @@
+-- 表名: room
+-- 说明: 包厢表
+CREATE TABLE IF NOT EXISTS room (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL COMMENT '主键ID',
+    room_name VARCHAR(50) NOT NULL COMMENT '房间名称',
+    capacity INT NOT NULL COMMENT '容纳人数',
+    min_consume DECIMAL(10,2) DEFAULT 0 COMMENT '最低消费',
+    status TINYINT NOT NULL DEFAULT 0 COMMENT '状态: 0空闲 1使用中',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='包厢表';

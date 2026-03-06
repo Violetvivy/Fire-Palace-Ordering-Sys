@@ -64,11 +64,6 @@ build/
 ehthumbs.db
 Thumbs.db
 
-# Database
-*.db
-*.sql
-*.sqlite
-
 # Application Properties
 application-*.properties
 
