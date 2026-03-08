@@ -3,7 +3,7 @@
     "name": "RN_frontend",
     "slug": "RN_frontend",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/images/icon.png",
     "scheme": "rnfrontend",
     "userInterfaceStyle": "automatic",
