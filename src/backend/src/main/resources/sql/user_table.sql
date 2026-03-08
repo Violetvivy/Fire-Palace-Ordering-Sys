@@ -2,7 +2,7 @@
 -- 说明: 用户表
 CREATE TABLE IF NOT EXISTS user (
     id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL COMMENT '主键ID',
-    name VARCHAR(50) NOT NULL COMMENT '用户名',
-    phone BIGINT NOT NULL COMMENT '手机号',
-    role TINYINT COMMENT '用户类型，0普通，1会员，2服务员'
+    username VARCHAR(50) NOT NULL COMMENT '用户名',
+    phone VARCHAR(20) NOT NULL COMMENT '手机号',
+    role TINYINT COMMENT '用户类型，0普通用户，1会员用户，2服务员'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';

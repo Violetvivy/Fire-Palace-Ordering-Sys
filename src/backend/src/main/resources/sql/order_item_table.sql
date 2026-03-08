@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS order_item (
     quantity INT NOT NULL COMMENT '菜品数量',
     price DECIMAL(10,2) NOT NULL COMMENT '菜品单价',
     subtotal DECIMAL(10,2) NOT NULL COMMENT '小计金额（quantity * price）',
+    order_item_status TINYINT COMMENT '菜品状态：0制作中 1上菜中 2已上菜',
     INDEX idx_order_id (order_id),
     INDEX idx_dish_id (dish_id),
     CONSTRAINT fk_order_item_order FOREIGN KEY (order_id) REFERENCES `order`(id) ON DELETE CASCADE ON UPDATE CASCADE,
