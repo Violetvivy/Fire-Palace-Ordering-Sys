@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS dish (
     image_url VARCHAR(255) NOT NULL COMMENT '菜品图片URL',
     video_url VARCHAR(255) COMMENT '菜品视频URL',
     description TEXT NOT NULL COMMENT '菜品描述',
+    cultural_story VARCHAR(255) not null comment '文化故事',
     status TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1上架，0下架',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     INDEX idx_category_id (category_id),
