@@ -20,12 +20,12 @@ public class User {
     /**
      * 用户名
      */
-    private String name;
+    private String username;
 
     /**
      * 手机号
      */
-    private Long phone;
+    private String phone;
 
     /**
      * 用户类型，0普通，1会员，2服务员
