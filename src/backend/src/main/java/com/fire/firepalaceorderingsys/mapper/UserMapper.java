@@ -23,6 +23,6 @@ public interface UserMapper {
     /**
      * 查询会员
      */
-    @Select("SELECT * FROM user WHERE phone = #{account}")
+    @Select("SELECT * FROM user WHERE phone = #{phone}")
     User selectByPhone(String phone);
 }
