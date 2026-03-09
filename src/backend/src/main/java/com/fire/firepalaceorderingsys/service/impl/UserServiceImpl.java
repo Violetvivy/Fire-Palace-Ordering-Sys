@@ -17,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private UserMapper userMapper;
 
     /**
@@ -46,7 +43,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public LoginVO login(String phone){
-
         // 查询会员
         User user = userMapper.selectByPhone(phone);
         if (user == null) {
