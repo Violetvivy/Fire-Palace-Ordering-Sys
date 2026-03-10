@@ -1,9 +1,11 @@
 package com.fire.firepalaceorderingsys.service.impl;
 
+import com.fire.firepalaceorderingsys.common.Result;
 import com.fire.firepalaceorderingsys.dto.UserDTO;
 import com.fire.firepalaceorderingsys.exception.BusinessException;
 import com.fire.firepalaceorderingsys.mapper.UserMapper;
 import com.fire.firepalaceorderingsys.pojo.User;
+import com.fire.firepalaceorderingsys.service.TokenService;
 import com.fire.firepalaceorderingsys.service.UserService;
 import com.fire.firepalaceorderingsys.util.JwtUtil;
 import com.fire.firepalaceorderingsys.vo.LoginVO;
@@ -19,14 +21,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private TokenService tokenService;
+
     /**
      * 注册会员
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void register(UserDTO dto){
-        if (userMapper.checkUserExists(dto.getUsername(),dto.getPhone())==1) {
-            throw new BusinessException("会员已经存在！");
+    public Result register(UserDTO dto){
+        if (userMapper.checkUserExists(dto.getUsername(),dto.getPhone()) >= 1) {
+            return Result.error("会员已经存在！");
         }
 
         User user = new User();
@@ -36,6 +41,8 @@ public class UserServiceImpl implements UserService {
 
         userMapper.insert(user);
         log.info("会员注册成功: {}", dto.getUsername());
+        
+        return Result.success("注册成功");
     }
 
     /**
@@ -52,8 +59,21 @@ public class UserServiceImpl implements UserService {
         // 生成JWT token
         String token = JwtUtil.generateToken(user.getId(), user.getUsername());
 
-        log.info("会员登录成功: {}", user.getUsername());
+        // 保存token到Redis
+        // tokenService.saveToken(user.getId(), token);
+
+        log.info("会员登录成功: {}, token: {}", user.getUsername(), token);
 
         return new LoginVO(Math.toIntExact(user.getId()), user.getUsername(), user.getPhone(), token);
+    }
+
+    /**
+     * 退出登录 (待完善redis配置)
+     */
+    @Override
+    public void logout(Long userId) {
+        // 从Redis中删除token
+        // tokenService.removeToken(userId);
+        log.info("用户退出登录: userId={}", userId);
     }
 }

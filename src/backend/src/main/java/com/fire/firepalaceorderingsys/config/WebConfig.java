@@ -27,12 +27,12 @@ public class WebConfig implements WebMvcConfigurer {
             registry.addInterceptor(authInterceptor)
                     // 拦截所有路径
                     .addPathPatterns("/**")
-                    // 放行认证相关路径
+                    // 放行认证相关路径和错误处理路径
                     .excludePathPatterns(
                             "/auth/login",
-                            "/auth/register"
+                            "/auth/register",
+                            "/error"
                     );
         }
     }
 }
-

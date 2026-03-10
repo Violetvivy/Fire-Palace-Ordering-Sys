@@ -3,6 +3,7 @@ package com.fire.firepalaceorderingsys.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -13,8 +14,18 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String signKey = "fire-palace-ordering-sys-jwt-secret-key-for-token-generation";
-    private static final Long expiration = 604_800_000L;
+    private static String signKey;
+    private static Long expiration;
+
+    @Value("${jwt.secret:fire-palace-ordering-sys-jwt-secret-key-for-token-generation}")
+    public void setSignKey(String key) {
+        signKey = key;
+    }
+
+    @Value("${jwt.expiration:604800000}")
+    public void setExpiration(Long exp) {
+        expiration = exp;
+    }
 
     /**
      * 生成token

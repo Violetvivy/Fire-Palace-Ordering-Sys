@@ -1,5 +1,6 @@
 package com.fire.firepalaceorderingsys.interceptor;
 
+import com.fire.firepalaceorderingsys.service.TokenService;
 import com.fire.firepalaceorderingsys.util.JwtUtil;
 import com.fire.firepalaceorderingsys.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-    //@Autowired
-    //private TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -38,9 +39,9 @@ public class AuthInterceptor implements HandlerInterceptor {
                 String username = JwtUtil.getUsernameFromToken(token);
 
                 /**
-                //【新增】验证Redis中的token是否匹配
+                // 验证Redis中的token是否匹配
                 if (!tokenService.validateToken(userId, token)) {
-                    log.warn("Token已失效（密码已修改或已退出登录）: userId={}", userId);
+                    log.warn("Token已失效: userId={}", userId);
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write("{\"code\":401,\"message\":\"登录已失效，请重新登录\"}");
