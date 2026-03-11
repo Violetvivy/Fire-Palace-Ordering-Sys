@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS dish_tag_rel (
     id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
     dish_id BIGINT NOT NULL COMMENT '菜品ID',
     tag_id BIGINT NOT NULL COMMENT '标签ID',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    deleted_at DATETIME DEFAULT NUll COMMENT '删除时间',
     UNIQUE INDEX uk_dish_tag (dish_id, tag_id),
     INDEX idx_dish_id (dish_id),
     INDEX idx_tag_id (tag_id),

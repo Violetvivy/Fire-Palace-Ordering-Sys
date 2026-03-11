@@ -1,6 +1,7 @@
 package com.fire.firepalaceorderingsys.service;
 
 
+import com.fire.firepalaceorderingsys.common.Result;
 import com.fire.firepalaceorderingsys.dto.UserDTO;
 import com.fire.firepalaceorderingsys.vo.LoginVO;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,20 @@ public interface UserService {
     /**
      * 注册会员
      */
-    void register(UserDTO dto);
+    Result register(UserDTO dto);
 
     /**
      * 登录会员
      */
     LoginVO login(String phone);
+
+    /**
+     * 游客登录
+     */
+    LoginVO guestLogin();
+
+    /**
+     * 退出登录
+     */
+    void logout(Long userId);
 }

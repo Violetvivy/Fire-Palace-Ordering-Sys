@@ -7,27 +7,32 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * 菜品标签关系实体类
- * 对应表: dish_tag_rel
+ * 管理员实体类
+ * 对应表: admin
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DishTagRel {
+public class Admin {
     /**
      * 主键ID
      */
     private Long id;
 
     /**
-     * 菜品ID
+     * 管理员姓名
      */
-    private Long dishId;
+    private String adminname;
 
     /**
-     * 标签ID
+     * 手机号
      */
-    private Long tagId;
+    private String phone;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     /**
      * 创建时间

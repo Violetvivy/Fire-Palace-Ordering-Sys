@@ -1,41 +1,42 @@
 package com.fire.firepalaceorderingsys.dto;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 /**
- * 用户数据传输对象
+ * 管理员数据传输对象
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class AdminDTO {
     /**
-     * 用户ID
+     * 管理员ID
      */
     private Long id;
 
     /**
-     * 用户名
+     * 管理员姓名
      */
-    private String username;
+    @NotBlank(message = "管理员姓名不能为空")
+    private String adminname;
 
     /**
      * 手机号
      */
     @NotBlank(message = "手机号不能为空")
-    //手机号格式验证
     @Pattern(regexp = "^1\\d{10}$", message = "手机号必须是11位号码")
     private String phone;
 
     /**
-     * 用户类型: 0普通，1会员，2服务员
+     * 密码
      */
-    @NotNull(message = "角色不能为空")
-    private Integer role;
+    @NotBlank(message = "密码不能为空")
+    private String password;
 }
