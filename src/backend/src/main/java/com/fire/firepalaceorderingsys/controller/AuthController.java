@@ -35,6 +35,15 @@ public class AuthController {
     }
 
     /**
+     * 游客登录
+     */
+    @GetMapping("/guest-login")
+    public Result guestLogin() {
+        LoginVO loginVO = userService.guestLogin();
+        return Result.success(loginVO);
+    }
+
+    /**
      * 退出登录
      */
     @PostMapping("/logout")
@@ -44,14 +53,5 @@ public class AuthController {
             userService.logout(userId);
         }
         return Result.success("退出登录成功");
-    }
-
-    /**
-     * 删除会员
-     */
-    @PostMapping("/delete")
-    public Result delete(@RequestParam("phone") String phone) {
-        // 删除会员，管理员专用
-        return Result.success("删除成功");
     }
 }

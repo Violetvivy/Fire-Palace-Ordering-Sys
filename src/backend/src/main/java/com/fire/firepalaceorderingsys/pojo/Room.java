@@ -44,4 +44,9 @@ public class Room {
      * 创建时间
      */
     private LocalDateTime createdAt;
+
+    /**
+     * 删除时间
+     */
+    private LocalDateTime deletedAt;
 }

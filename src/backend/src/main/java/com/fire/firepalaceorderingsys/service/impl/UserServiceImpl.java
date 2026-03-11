@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
@@ -23,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private TokenService tokenService;
+
+    private final Random random = new Random();
 
     /**
      * 注册会员
@@ -65,6 +70,53 @@ public class UserServiceImpl implements UserService {
         log.info("会员登录成功: {}, token: {}", user.getUsername(), token);
 
         return new LoginVO(Math.toIntExact(user.getId()), user.getUsername(), user.getPhone(), token);
+    }
+
+    /**
+     * 游客登录
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public LoginVO guestLogin() {
+        // 生成4位随机数字
+        int randomNumber = 1000 + random.nextInt(9000);
+        String phone = "visit-" + randomNumber;
+        
+        // 检查是否已存在
+        User existingUser = userMapper.selectByPhone(phone);
+        if (existingUser != null) {
+            // 如果已存在，重新生成（最多尝试5次）
+            for (int i = 0; i < 5; i++) {
+                randomNumber = 1000 + random.nextInt(9000);
+                phone = "visit-" + randomNumber;
+                existingUser = userMapper.selectByPhone(phone);
+                if (existingUser == null) {
+                    break;
+                }
+            }
+            // 如果5次后仍然存在，使用时间戳
+            if (existingUser != null) {
+                phone = "visit-" + System.currentTimeMillis() % 10000;
+            }
+        }
+
+        User guestUser = new User();
+        guestUser.setUsername("游客" + randomNumber);
+        guestUser.setPhone(phone);
+        guestUser.setRole(0);
+        guestUser.setCreatedAt(LocalDateTime.now());
+
+        userMapper.insert(guestUser);
+        
+        // 生成JWT token
+        String token = JwtUtil.generateToken(guestUser.getId(), guestUser.getUsername());
+
+        // 保存token到Redis
+        // tokenService.saveToken(guestUser.getId(), token);
+
+        log.info("游客登录成功: phone={}, userId={}, token={}", phone, guestUser.getId(), token);
+
+        return new LoginVO(Math.toIntExact(guestUser.getId()), guestUser.getUsername(), phone, token);
     }
 
     /**

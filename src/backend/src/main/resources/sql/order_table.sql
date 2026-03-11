@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `order` (
     status TINYINT NOT NULL DEFAULT 0 COMMENT '订单状态：0已下单，1已接单，2已完成',
     waiter_id BIGINT NOT NULL COMMENT '服务员ID',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    deleted_at DATETIME DEFAULT NUll COMMENT '删除时间',
     UNIQUE INDEX uk_order_no (order_no),
     INDEX idx_user_id (user_id),
     INDEX idx_room_id (room_id),

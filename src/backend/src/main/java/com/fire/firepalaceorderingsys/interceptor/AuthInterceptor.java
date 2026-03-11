@@ -38,17 +38,6 @@ public class AuthInterceptor implements HandlerInterceptor {
                 Long userId = JwtUtil.getUserIdFromToken(token);
                 String username = JwtUtil.getUsernameFromToken(token);
 
-                /**
-                // 验证Redis中的token是否匹配
-                if (!tokenService.validateToken(userId, token)) {
-                    log.warn("Token已失效: userId={}", userId);
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.setContentType("application/json;charset=UTF-8");
-                    response.getWriter().write("{\"code\":401,\"message\":\"登录已失效，请重新登录\"}");
-                    return false;
-                }
-                 **/
-
                 // 设置到request属性中
                 request.setAttribute("userId", userId);
                 request.setAttribute("username", username);

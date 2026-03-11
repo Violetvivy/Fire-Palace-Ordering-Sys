@@ -20,6 +20,11 @@ public interface UserService {
     LoginVO login(String phone);
 
     /**
+     * 游客登录
+     */
+    LoginVO guestLogin();
+
+    /**
      * 退出登录
      */
     void logout(Long userId);

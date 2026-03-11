@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS dish (
     cultural_story VARCHAR(255) not null comment '文化故事',
     status TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1上架，0下架',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    deleted_at DATETIME DEFAULT NUll COMMENT '删除时间',
     INDEX idx_category_id (category_id),
     INDEX idx_status (status),
     INDEX idx_is_signature (is_signature),

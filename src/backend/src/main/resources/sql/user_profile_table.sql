@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS user_profile (
     spicy_preference TINYINT DEFAULT 0 COMMENT '辣度偏好：0不辣，1微辣，2中辣，3重辣',
     visit_count INT DEFAULT 0 COMMENT '到店次数',
     last_visit_time DATETIME NOT NULL COMMENT '最后到店时间',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    deleted_at DATETIME DEFAULT NUll COMMENT '删除时间',
     UNIQUE INDEX uk_user_id (user_id),
     INDEX idx_favorite_category (favorite_category),
     INDEX idx_last_visit_time (last_visit_time),
