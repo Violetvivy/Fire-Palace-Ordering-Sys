@@ -1,7 +1,6 @@
 package com.fire.firepalaceorderingsys.mapper;
 
 import com.fire.firepalaceorderingsys.pojo.Admin;
-import com.fire.firepalaceorderingsys.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
