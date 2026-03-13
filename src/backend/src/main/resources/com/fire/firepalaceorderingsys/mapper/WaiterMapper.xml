@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fire.firepalaceorderingsys.mapper.WaiterMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="WaiterResultMap" type="com.fire.firepalaceorderingsys.pojo.Waiter">
+        <id property="id" column="id"/>
+        <result property="waitername" column="waitername"/>
+        <result property="phone" column="phone"/>
+        <result property="workNo" column="work_no"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="deletedAt" column="deleted_at"/>
+    </resultMap>
+
+</mapper>
