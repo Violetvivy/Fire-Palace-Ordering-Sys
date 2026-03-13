@@ -9,6 +9,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 管理员控制器
+ */
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
