@@ -17,9 +17,7 @@ function CustomHeader() {
             className="h-8 w-24"
             resizeMode="contain"
           />
-          <Text className="text-white text-sm ml-2 opacity-80">
-            | 包厢贵宾点餐系统
-          </Text>
+          <Text className="text-white text-sm ml-2 opacity-80">| 包厢贵宾点餐系统</Text>
         </View>
       </View>
 
@@ -108,8 +106,8 @@ export default function TabLayout() {
         header: (props) => <CustomHeader />,
         // 确保头部显示
         headerShown: true,
-      }}>
-      
+      }}
+    >
       {/* 菜单标签页 */}
       <Tabs.Screen
         name="index"
