@@ -249,8 +249,11 @@ export default function IndexScreen() {
   // 切换购物车展开/折叠
   const toggleCart = () => setCartExpanded(!cartExpanded);
 
+  const goToRecommend = () => {
+    
+  };
   // 处理添加菜品到购物车
-  const addToCart = (dish) => {
+  const addToCart = (dish:any) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === dish.id);
       if (existing) {
@@ -446,7 +449,9 @@ export default function IndexScreen() {
 
       {/* 底部按钮 */}
       <View className="p-4 border-t space-y-3">
-        <TouchableOpacity className="w-full py-4 rounded-xl flex-row items-center justify-center gap-2 border-2 border-[#B22222]">
+        <TouchableOpacity className="w-full py-4 rounded-xl flex-row items-center justify-center gap-2 border-2 border-[#B22222]"
+          onPress={goToRecommend}
+        >
           <MaterialIcons name="smart-toy" size={20} color="#B22222" />
           <Text className="text-[#B22222] font-bold">AI 套餐生成器</Text>
         </TouchableOpacity>

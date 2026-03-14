@@ -45,7 +45,8 @@ export default function AdminLoginScreen() {
         setAdminInfo({ token, adminId: adminId, adminname: username, phone });
 
         // 跳转包厢分配页面
-        router.replace('/assign');
+        router.replace('/(tabs)');
+        // router.replace('/assign'); //todo
       } else {
         Alert.alert('登录失败', response.msg || '用户名或密码错误');
       }
