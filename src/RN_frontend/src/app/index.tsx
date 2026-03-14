@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import { adminLogin } from '@/services/admin';
+=======
 import { adminLogin } from '@/services/auth';
+>>>>>>> develop
 import useAuthStore from '@/stores/useAuthStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
