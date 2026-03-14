@@ -1,4 +1,4 @@
-import { adminLogin } from '@/services/auth';
+import { adminLogin } from '@/services/admin';
 import useAuthStore from '@/stores/useAuthStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
