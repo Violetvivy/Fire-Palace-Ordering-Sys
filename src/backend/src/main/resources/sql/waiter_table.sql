@@ -1,0 +1,10 @@
+-- 表名: waiter
+-- 说明: 服务员表
+CREATE TABLE IF NOT EXISTS waiter (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL COMMENT '主键ID',
+    waitername VARCHAR(50) NOT NULL COMMENT '服务员姓名',
+    phone VARCHAR(20) NOT NULL COMMENT '手机号',
+    work_no VARCHAR(20) NOT NULL COMMENT '工号',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    deleted_at DATETIME DEFAULT NULL COMMENT '删除时间'
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='服务员表';
