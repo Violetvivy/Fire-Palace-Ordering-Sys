@@ -3,13 +3,11 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import 'react-native-reanimated';
 import '../../global.css'; // 确保路径正确
-// export default function RootLayout() {
-//   return <Stack />;
-// }
-import { StatusBar } from 'react-native';
 import { useColorScheme } from '../components/useColorScheme';
+import '../locales/i18n';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -61,6 +59,7 @@ function RootLayoutNav() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="assign" options={{ headerShown: false }} />
+        <Stack.Screen name="visitorLogin" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

@@ -1,6 +1,5 @@
 import apiClient from './apiClient';
 
-<<<<<<< HEAD
 //登录数据
 export interface LoginData {
   token: string;
@@ -55,25 +54,5 @@ export const guestLogin = async (): Promise<LoginResponse> => {
 //退出登录
 export const userLogout = async (): Promise<LogoutResponse> => {
   const response = await apiClient.post<LogoutResponse>('/auth/logout');
-=======
-export interface AdminLoginParams {
-  adminname: string;
-  password: string;
-  phone: string;
-}
-
-export interface AdminLoginResponse {
-  code: number;
-  msg: string;
-  data: {
-    token: string;
-    adminId: number;
-    username: string;
-  };
-}
-
-export const adminLogin = async (params: AdminLoginParams): Promise<AdminLoginResponse> => {
-  const response = await apiClient.post<AdminLoginResponse>('/admin/login', params);
->>>>>>> develop
   return response.data;
 };

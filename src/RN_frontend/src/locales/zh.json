@@ -1,0 +1,18 @@
+{
+  "header": {
+    "currentBox": "当前包厢：",
+    "boxName": "岳阳楼 (VIP-08)",
+    "peopleCount": "8人用餐",
+    "membershipCode": "会员码",
+    "languageSwitch": "中 / EN",
+    "systemName": "包厢贵宾点餐系统",
+    "endTheMeal":"结束用餐",
+    "boxAllocation":"包厢分配"
+  },
+  "tabs": {
+    "menu": "菜单",
+    "recommend": "推荐",
+    "cart": "购物车",
+    "service": "服务"
+  }
+}

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { adminLogin } from '@/services/admin';
-=======
-import { adminLogin } from '@/services/auth';
->>>>>>> develop
 import useAuthStore from '@/stores/useAuthStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -45,12 +41,11 @@ export default function AdminLoginScreen() {
       const response = await adminLogin({ adminname, password, phone });
       if (response.code === 1) {
         // 登录成功，保存管理员信息
-        const { token, adminId, username } = response.data;
-        setAdminInfo({ token, adminId: adminId, adminname: username, phone });
+        const { token, userId, username } = response.data;
+        setAdminInfo({ token, adminId: userId, adminname: username, phone });
 
         // 跳转包厢分配页面
-        router.replace('/(tabs)');
-        // router.replace('/assign'); //todo
+        router.replace('/assign');
       } else {
         Alert.alert('登录失败', response.msg || '用户名或密码错误');
       }
