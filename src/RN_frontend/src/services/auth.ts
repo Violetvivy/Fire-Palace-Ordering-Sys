@@ -3,6 +3,7 @@ import apiClient from './apiClient';
 export interface AdminLoginParams {
   adminname: string;
   password: string;
+  phone: string;
 }
 
 export interface AdminLoginResponse {
@@ -11,7 +12,7 @@ export interface AdminLoginResponse {
   data: {
     token: string;
     adminId: number;
-    adminname: string;
+    username: string;
   };
 }
 

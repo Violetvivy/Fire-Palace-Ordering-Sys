@@ -24,27 +24,28 @@ const COLORS = {
 export default function AdminLoginScreen() {
   const router = useRouter();
   const [adminname, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const setAdminInfo = useAuthStore((state) => state.setAdminInfo);
 
   const handleLogin = async () => {
-    if (!adminname.trim() || !password.trim()) {
-      Alert.alert('提示', '请输入用户名和密码');
+    if (!adminname.trim() || !password.trim() || !phone.trim()) {
+      Alert.alert('提示', '请输入用户名、密码和手机号');
       return;
     }
 
     setIsLoading(true);
     try {
-      const response = await adminLogin({ adminname, password });
+      const response = await adminLogin({ adminname, password, phone });
       if (response.code === 1) {
         // 登录成功，保存管理员信息
-        const { token, adminId, adminname: adminName } = response.data;
-        setAdminInfo({ token, adminId, adminname: adminName });
+        const { token, adminId, username } = response.data;
+        setAdminInfo({ token, adminId: adminId, adminname: username, phone });
 
-        // 跳转 这里用原有的 (tabs) 作为示例
-        router.replace('/(tabs)');
+        // 跳转包厢分配页面
+        router.replace('/assign');
       } else {
         Alert.alert('登录失败', response.msg || '用户名或密码错误');
       }
@@ -76,13 +77,14 @@ export default function AdminLoginScreen() {
                 className="h-8 w-24"
                 resizeMode="contain"
               />
-              <Text className="text-white/80 text-xs ml-2">| 管理后台</Text>
+              <Text className="text-white/80 text-xs ml-2">| 系统登录</Text>
             </View>
           </View>
           <View className="flex-row items-center gap-2">
             <Ionicons name="person-circle-outline" size={24} color="white" />
             <Text className="text-white font-bold text-sm">管理员</Text>
           </View>
+          
         </View>
 
         {/* 登录卡片 */}
@@ -110,6 +112,22 @@ export default function AdminLoginScreen() {
                   placeholderTextColor="#9CA3AF"
                   value={adminname}
                   onChangeText={setUsername}
+                  autoCapitalize="none"
+                  editable={!isLoading}
+                />
+              </View>
+            </View>
+
+            <View className="mb-4">
+              <Text className="text-gray-600 text-sm mb-1 ml-1">手机号</Text>
+              <View className="flex-row items-center bg-white/80 rounded-xl border border-amber-200/60 px-4">
+                <Ionicons name="phone-portrait-outline" size={18} color="#9CA3AF" />
+                <TextInput
+                  className="flex-1 py-3 px-2 text-gray-800"
+                  placeholder="请输入管理员手机号"
+                  placeholderTextColor="#9CA3AF"
+                  value={phone}
+                  onChangeText={setPhone}
                   autoCapitalize="none"
                   editable={!isLoading}
                 />

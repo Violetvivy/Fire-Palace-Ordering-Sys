@@ -8,6 +8,7 @@ import '../../global.css'; // 确保路径正确
 // export default function RootLayout() {
 //   return <Stack />;
 // }
+import { StatusBar } from 'react-native';
 import { useColorScheme } from '../components/useColorScheme';
 
 export {
@@ -51,6 +52,7 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StatusBar hidden={true} />
       <Stack
         screenOptions={{
           animation: 'slide_from_right',
@@ -58,6 +60,7 @@ function RootLayoutNav() {
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="assign" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

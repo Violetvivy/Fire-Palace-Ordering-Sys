@@ -6,6 +6,7 @@ interface AdminInfo {
   adminId: number;
   adminname: string;
   token: string;
+  phone: string;
 }
 
 interface AuthState {
