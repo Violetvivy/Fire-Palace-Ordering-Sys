@@ -12,7 +12,7 @@ export interface AdminLoginResponse {
     msg: string;
     data: {
         token: string;
-        adminId: number;
+        userId: number;
         username: string;
     };
 }

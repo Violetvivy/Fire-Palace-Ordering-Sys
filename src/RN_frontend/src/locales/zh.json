@@ -6,7 +6,8 @@
     "membershipCode": "会员码",
     "languageSwitch": "中 / EN",
     "systemName": "包厢贵宾点餐系统",
-    "endTheMeal":"结束用餐"
+    "endTheMeal":"结束用餐",
+    "boxAllocation":"包厢分配"
   },
   "tabs": {
     "menu": "菜单",

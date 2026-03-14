@@ -6,7 +6,8 @@
     "membershipCode": "Membership Code",
     "languageSwitch": "EN / 中",
     "systemName": "VIP ordering system",
-    "endTheMeal":"End the meal"
+    "endTheMeal":"End the meal",
+    "boxAllocation":"Box Allocation"
   },
   "tabs": {
     "menu": "Menu",
