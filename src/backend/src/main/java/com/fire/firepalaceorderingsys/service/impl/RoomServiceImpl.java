@@ -148,4 +148,60 @@ public class RoomServiceImpl implements RoomService {
 
         return Result.success(roomDTOs);
     }
+
+    /**
+     * 绑定包厢（将状态从0改为1）
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result bindRoom(String roomName) {
+        if (roomName == null || roomName.trim().isEmpty()) {
+            return Result.error("包厢名称不能为空");
+        }
+
+        Room room = roomMapper.selectByRoomName(roomName);
+        if (room == null) {
+            return Result.error("包厢不存在");
+        }
+
+        if (room.getStatus() != 0) {
+            return Result.error("包厢当前状态不是空闲，无法绑定");
+        }
+
+        int result = roomMapper.updateStatus(room.getId(), 1);
+        if (result > 0) {
+            log.info("包厢绑定成功: roomName={}, id={}", roomName, room.getId());
+            return Result.success("绑定成功");
+        } else {
+            return Result.error("绑定失败");
+        }
+    }
+
+    /**
+     * 解除绑定包厢（将状态从1改为0）
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result unbindRoom(String roomName) {
+        if (roomName == null || roomName.trim().isEmpty()) {
+            return Result.error("包厢名称不能为空");
+        }
+
+        Room room = roomMapper.selectByRoomName(roomName);
+        if (room == null) {
+            return Result.error("包厢不存在");
+        }
+
+        if (room.getStatus() != 1) {
+            return Result.error("包厢当前状态不是使用中，无法解绑");
+        }
+
+        int result = roomMapper.updateStatus(room.getId(), 0);
+        if (result > 0) {
+            log.info("包厢解绑成功: roomName={}, id={}", roomName, room.getId());
+            return Result.success("解绑成功");
+        } else {
+            return Result.error("解绑失败");
+        }
+    }
 }

@@ -38,4 +38,14 @@ public interface RoomService {
      * 根据状态查询包厢
      */
     Result getRoomsByStatus(Integer status);
+
+    /**
+     * 绑定包厢（将状态从0改为1）
+     */
+    Result bindRoom(String roomName);
+
+    /**
+     * 解除绑定包厢（将状态从1改为0）
+     */
+    Result unbindRoom(String roomName);
 }

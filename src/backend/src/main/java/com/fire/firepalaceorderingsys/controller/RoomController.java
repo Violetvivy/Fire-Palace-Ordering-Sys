@@ -64,4 +64,20 @@ public class RoomController {
     public Result getRoomsByStatus(@PathVariable Integer status) {
         return roomService.getRoomsByStatus(status);
     }
+
+    /**
+     * 绑定包厢（将状态从0改为1）
+     */
+    @PostMapping("/binding")
+    public Result bindRoom(@RequestParam String roomName) {
+        return roomService.bindRoom(roomName);
+    }
+
+    /**
+     * 解除绑定包厢（将状态从1改为0）
+     */
+    @PostMapping("/unbinding")
+    public Result unbindRoom(@RequestParam String roomName) {
+        return roomService.unbindRoom(roomName);
+    }
 }
