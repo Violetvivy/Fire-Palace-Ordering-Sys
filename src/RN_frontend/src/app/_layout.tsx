@@ -2,8 +2,8 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { StatusBar } from 'react-native';
 import 'react-native-reanimated';
 import '../../global.css'; // 确保路径正确
 import { useColorScheme } from '../components/useColorScheme';

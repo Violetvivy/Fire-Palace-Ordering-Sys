@@ -7,12 +7,45 @@
     "languageSwitch": "中 / EN",
     "systemName": "包厢贵宾点餐系统",
     "endTheMeal":"结束用餐",
-    "boxAllocation":"包厢分配"
+    "boxAllocation":"包厢分配",
+    "bindBox":"绑定包厢"
   },
   "tabs": {
     "menu": "菜单",
     "recommend": "推荐",
     "cart": "购物车",
     "service": "服务"
+  },
+  "modal": {
+    "selectBox": "选择包厢"
+  },
+  "common":{
+    "cancel":"取消",
+    "people":"人",
+    "accommodate":"容纳",
+    "notice":"提示",
+    "confirm":"确认",
+    "error":"错误",
+    "success":"成功",
+    "failed":"失败"
+  },
+  "login":{
+    "guestLogin":"客人登录",
+    "pleaseEnter":"请输入",
+    "phoneNumber":"手机号",
+    "memberLogin":"会员登录",
+    "touristLogin":"游客登录",
+    "register":"注册",
+    "registerMember":"会员注册",
+    "psw":"密码",
+    "userName":"用户名",
+    "loginSuccess":"登录成功"
+  },
+  "alertMsg":{
+    "confirmUnbindBox":"确定要解绑当前包厢吗？",
+    "unbindSuccess":"已解绑包厢",
+    "bindSuccess":"已绑定包厢",
+    "completeInfor":"请填写完整信息",
+    "bindBoxFirst":"请先绑定包厢"
   }
 }

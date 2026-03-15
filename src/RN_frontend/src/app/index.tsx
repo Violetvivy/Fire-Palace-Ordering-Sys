@@ -1,5 +1,5 @@
 import { adminLogin } from '@/services/admin';
-import useAuthStore from '@/stores/useAuthStore';
+import useAdminStore from '@/stores/useAdminStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
@@ -28,7 +28,7 @@ export default function AdminLoginScreen() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const setAdminInfo = useAuthStore((state) => state.setAdminInfo);
+  const setAdminInfo = useAdminStore((state) => state.setAdminInfo);
 
   const handleLogin = async () => {
     if (!adminname.trim() || !password.trim() || !phone.trim()) {

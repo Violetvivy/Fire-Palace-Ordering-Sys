@@ -27,7 +27,7 @@ export interface RegisterResponse {
 //用户注册参数
 export interface UserRegisterParams {
   phone: string;
-  password: string;
+  role: number; //用户类型: 0普通，1会员，2服务员
   username: string;
 }
 

@@ -9,14 +9,14 @@ interface AdminInfo {
   phone: string;
 }
 
-interface AuthState {
+interface adminState {
   adminInfo: AdminInfo | null;
   isAuthenticated: boolean;
   setAdminInfo: (info: AdminInfo | null) => void;
   logout: () => void;
 }
 
-const useAuthStore = create<AuthState>()(
+const useAdminStore = create<adminState>()(
   persist(
     (set) => ({
       adminInfo: null,
@@ -25,10 +25,10 @@ const useAuthStore = create<AuthState>()(
       logout: () => set({ adminInfo: null, isAuthenticated: false }),
     }),
     {
-      name: 'auth-storage', // 存储的 key
+      name: 'admin-storage', // 存储的 key
       storage: createJSONStorage(() => AsyncStorage),
     }
   )
 );
 
-export default useAuthStore;
+export default useAdminStore;
