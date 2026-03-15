@@ -34,7 +34,7 @@ public class UserDTO {
     private String phone;
 
     /**
-     * 用户类型: 0普通，1会员，2服务员
+     * 用户类型: 0普通，1会员
      */
     @NotNull(message = "角色不能为空")
     private Integer role;
