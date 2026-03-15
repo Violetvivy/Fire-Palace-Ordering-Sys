@@ -53,4 +53,16 @@ public interface RoomMapper {
      */
     @Select("SELECT COUNT(*) FROM room WHERE room_name = #{roomName} AND deleted_at IS NULL")
     int checkRoomNameExists(String roomName);
+
+    /**
+     * 根据包厢名称查询包厢
+     */
+    @Select("SELECT * FROM room WHERE room_name = #{roomName} AND deleted_at IS NULL")
+    Room selectByRoomName(String roomName);
+
+    /**
+     * 更新包厢状态
+     */
+    @Update("UPDATE room SET status = #{status} WHERE id = #{id} AND deleted_at IS NULL")
+    int updateStatus(Long id, Integer status);
 }
