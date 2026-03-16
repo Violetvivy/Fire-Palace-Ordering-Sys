@@ -201,9 +201,11 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(orderDTO, order);
         // 确保其他字段不变
         order.setId(existingOrder.getId());
+        order.setUserId(existingOrder.getUserId());
+        order.setRoomId(existingOrder.getRoomId());
+        order.setOrderNo(existingOrder.getOrderNo());
         order.setWaiterId(existingOrder.getWaiterId());
         order.setCreatedAt(existingOrder.getCreatedAt());
-        order.setDeletedAt(existingOrder.getDeletedAt());
 
         if (orderMapper.updateByOrderNo(order) <= 0) {
             throw new BusinessException("更新订单信息失败");

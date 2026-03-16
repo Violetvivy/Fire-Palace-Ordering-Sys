@@ -73,11 +73,17 @@ public interface OrderMapper {
     /**
      * 根据订单号更新订单信息
      */
-    @Update("UPDATE `order` SET user_id = #{userId}, room_id = #{roomId}, " +
-            "waiter_id = #{waiterId}, people_count = #{peopleCount}, budget = #{budget}, " +
-            "total_amount = #{totalAmount}, status = #{status} " +
-            "WHERE order_no = #{orderNo} AND deleted_at IS NULL")
-    int updateByOrderNo(com.fire.firepalaceorderingsys.pojo.Order order);
+    @Update("<script>" +
+            "UPDATE `order` " +
+            "<set>" +
+            "    <if test='peopleCount != null'>people_count = #{peopleCount},</if>" +
+            "    <if test='budget != null'>budget = #{budget},</if>" +
+            "    <if test='totalAmount != null'>total_amount = #{totalAmount},</if>" +
+            "    <if test='status != null'>status = #{status},</if>" +
+            "</set>" +
+            "WHERE order_no = #{orderNo} AND deleted_at IS NULL" +
+            "</script>")
+    int updateByOrderNo(Order order);
 
     /**
      * 逻辑删除订单
