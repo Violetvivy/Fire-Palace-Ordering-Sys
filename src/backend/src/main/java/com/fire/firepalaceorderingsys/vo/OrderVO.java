@@ -1,6 +1,5 @@
-package com.fire.firepalaceorderingsys.dto;
+package com.fire.firepalaceorderingsys.vo;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +8,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 订单数据传输对象
+ * 订单VO类
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDTO {
+public class OrderVO {
     /**
      * 主键ID
      */
@@ -23,7 +22,6 @@ public class OrderDTO {
     /**
      * 订单编号
      */
-    @NotNull(message = "订单号不能为空")
     private String orderNo;
 
     /**
@@ -57,7 +55,7 @@ public class OrderDTO {
     private BigDecimal totalAmount;
 
     /**
-     * 订单状态：0未支付，1已支付，2完成
+     * 订单状态：0已下单，1已接单，2已完成
      */
     private Integer status;
 
@@ -65,4 +63,9 @@ public class OrderDTO {
      * 创建时间
      */
     private LocalDateTime createdAt;
+
+    /**
+     * 删除时间
+     */
+    private LocalDateTime deletedAt;
 }
