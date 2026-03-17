@@ -33,7 +33,8 @@ public class WebConfig implements WebMvcConfigurer {
                             "/auth/register",
                             "/auth/guest-login",
                             "/error",
-                            "/admin/login"
+                            "/admin/login",
+                            "/upload/**"
                     );
         }
     }
