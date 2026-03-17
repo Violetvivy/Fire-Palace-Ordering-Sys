@@ -1,0 +1,51 @@
+{
+  "header": {
+    "currentBox": "Current Box:",
+    "boxName": "Yueyang Tower (VIP-08)",
+    "peopleCount": "8 people",
+    "membershipCode": "Membership Code",
+    "languageSwitch": "EN / 中",
+    "systemName": "VIP ordering system",
+    "endTheMeal":"End the meal",
+    "boxAllocation":"Allocate Box",
+    "bindBox":"Bind Box"
+  },
+  "tabs": {
+    "menu": "Menu",
+    "recommend": "Recommend",
+    "cart": "Cart",
+    "service": "Service"
+  },
+  "modal": {
+    "selectBox": "Select a box"
+  },
+  "common":{
+    "cancel":"Cancel",
+    "people":"People",
+    "accommodate":"Accommodate",
+    "notice":"Notice",
+    "confirm":"Confirm",
+    "error":"Error",
+    "success":"Success",
+    "failed":"Failed"
+  },
+  "login":{
+    "guestLogin":"Guest Login",
+    "pleaseEnter":"Please Enter Your ",
+    "phoneNumber":"Phone Number",
+    "memberLogin":"Login as a Member",
+    "touristLogin":"Login as a Tourist",
+    "register":"Register",
+    "registerMember":"Register as a Member",
+    "psw":"Password",
+    "userName":"User Name",
+    "loginSuccess":"Login Success"
+  },
+  "alertMsg":{
+    "confirmUnbindBox":"Are you sure to unbind the Current box?",
+    "unbindSuccess":"Unbinded the box successfully",
+    "bindSuccess":"Binded the box successfully",
+    "completeInfor":"Please fill in the complete information",
+    "bindBoxFirst":"Please bind the box first"
+  }
+}

@@ -1,15 +1,23 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Tabs } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
-// 完全仿照 HTML 的顶部栏组件
 function CustomHeader() {
+  const { t, i18n } = useTranslation(); // 使用 useTranslation
+
+  const toggleLanguage = async () => {
+    const newLang = i18n.language === 'en' ? 'zh' : 'en';
+    await i18n.changeLanguage(newLang);
+    await AsyncStorage.setItem('user-language', newLang);
+  };
+
   return (
     <View className="h-16 bg-[#801212] flex-row items-center justify-between px-6">
-      {/* 左侧区域：火宫殿文字 + 包厢说明 */}
       <View className="flex-row items-center gap-3">
         <View className="flex-row items-center">
           <Image
@@ -17,16 +25,15 @@ function CustomHeader() {
             className="h-8 w-24"
             resizeMode="contain"
           />
-          <Text className="text-white text-sm ml-2 opacity-80">| 包厢贵宾点餐系统</Text>
+          <Text className="text-white text-sm ml-2 opacity-80">| {t('header.systemName')}</Text>
         </View>
       </View>
 
-      {/* 右侧区域：包厢信息、人数、语言切换、会员码 */}
       <View className="flex-row items-center gap-6">
         {/* 当前包厢 */}
         <View className="items-end">
-          <Text className="text-white text-xs opacity-70">当前包厢：</Text>
-          <Text className="text-white font-bold">岳阳楼 (VIP-08)</Text>
+          <Text className="text-white text-xs opacity-70">{t('header.currentBox')}</Text>
+          <Text className="text-white font-bold">{t('header.boxName')}</Text>
         </View>
 
         <View className="h-8 w-[1px] bg-white/30" />
@@ -42,13 +49,29 @@ function CustomHeader() {
             size={20}
             tintColor="white"
           />
-          <Text className="text-white font-bold">8人用餐</Text>
+          <Text className="text-white font-bold">{t('header.peopleCount')}</Text>
         </View>
 
         <View className="h-8 w-[1px] bg-white/30" />
 
-        {/* 中英文切换 */}
+        {/* 结束用餐 */}
         <Pressable className="flex-row items-center gap-2" onPress={() => {}}>
+          <SymbolView
+            name={{
+              ios: 'doc.text',
+              android:'message',
+              web: 'message',
+            }}
+            size={20}
+            tintColor="white"
+          />
+          <Text className="text-white font-bold text-sm">{t('header.endTheMeal')}</Text>
+        </Pressable>
+        
+        <View className="h-8 w-[1px] bg-white/30" />
+
+        {/* 中英文切换按钮 */}
+        <Pressable className="flex-row items-center gap-2" onPress={toggleLanguage}>
           <SymbolView
             name={{
               ios: 'globe',
@@ -58,23 +81,7 @@ function CustomHeader() {
             size={20}
             tintColor="white"
           />
-          <Text className="text-white font-bold text-sm">中 / EN</Text>
-        </Pressable>
-
-        <View className="h-8 w-[1px] bg-white/30" />
-
-        {/* 会员码 */}
-        <Pressable className="flex-row items-center gap-2" onPress={() => {}}>
-          <SymbolView
-            name={{
-              ios: 'doc.text',
-              android: 'description',
-              web: 'description',
-            }}
-            size={20}
-            tintColor="white"
-          />
-          <Text className="text-white font-bold text-sm">会员码</Text>
+          <Text className="text-white font-bold text-sm">{t('header.languageSwitch')}</Text>
         </Pressable>
       </View>
     </View>
@@ -83,6 +90,7 @@ function CustomHeader() {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { t } = useTranslation(); // 用于标签页标题
 
   return (
     <Tabs
@@ -102,24 +110,17 @@ export default function TabLayout() {
         tabBarIconStyle: {
           marginTop: 4,
         },
-        // 所有页面使用同一个自定义头部
         header: (props) => <CustomHeader />,
-        // 确保头部显示
         headerShown: true,
       }}
     >
-      {/* 菜单标签页 */}
       <Tabs.Screen
         name="index"
         options={{
-          title: '菜单',
+          title: t('tabs.menu'), // 使用翻译
           tabBarIcon: ({ color, focused }) => (
             <SymbolView
-              name={{
-                ios: 'list.bullet',
-                android: 'menu',
-                web: 'menu',
-              }}
+              name={{ ios: 'list.bullet', android: 'menu', web: 'menu' }}
               tintColor={focused ? '#801212' : color}
               size={24}
               type={focused ? 'hierarchical' : 'monochrome'}
@@ -128,18 +129,13 @@ export default function TabLayout() {
         }}
       />
 
-      {/* 推荐标签页 */}
       <Tabs.Screen
         name="ai_recommend"
         options={{
-          title: '推荐',
+          title: t('tabs.recommend'),
           tabBarIcon: ({ color, focused }) => (
             <SymbolView
-              name={{
-                ios: 'hand.thumbsup',
-                android: 'thumb_up',
-                web: 'thumb_up',
-              }}
+              name={{ ios: 'hand.thumbsup', android: 'thumb_up', web: 'thumb_up' }}
               tintColor={focused ? '#801212' : color}
               size={24}
               type={focused ? 'hierarchical' : 'monochrome'}
@@ -148,18 +144,13 @@ export default function TabLayout() {
         }}
       />
 
-      {/* 购物车标签页 */}
       <Tabs.Screen
         name="cart"
         options={{
-          title: '购物车',
+          title: t('tabs.cart'),
           tabBarIcon: ({ color, focused }) => (
             <SymbolView
-              name={{
-                ios: 'cart',
-                android: 'shopping_cart',
-                web: 'shopping_cart',
-              }}
+              name={{ ios: 'cart', android: 'shopping_cart', web: 'shopping_cart' }}
               tintColor={focused ? '#801212' : color}
               size={24}
               type={focused ? 'hierarchical' : 'monochrome'}
@@ -168,18 +159,13 @@ export default function TabLayout() {
         }}
       />
 
-      {/* 服务标签页 */}
       <Tabs.Screen
         name="service"
         options={{
-          title: '服务',
+          title: t('tabs.service'),
           tabBarIcon: ({ color, focused }) => (
             <SymbolView
-              name={{
-                ios: 'headphones',
-                android: 'headset',
-                web: 'headset',
-              }}
+              name={{ ios: 'headphones', android: 'headset', web: 'headset' }}
               tintColor={focused ? '#801212' : color}
               size={24}
               type={focused ? 'hierarchical' : 'monochrome'}

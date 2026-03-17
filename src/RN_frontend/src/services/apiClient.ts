@@ -1,8 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useAdminStore from '@/stores/useAdminStore'; // 根据实际路径调整
 import axios from 'axios';
 
-// 根据环境变量或常量配置基础URL
-const BASE_URL = 'http://localhost:8080'; // 根据实际部署修改
+const BASE_URL = 'http://localhost:8080';
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -10,23 +9,27 @@ const apiClient = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// 请求拦截器：从 AsyncStorage 获取 token 并附加到请求头
+// 请求拦截器：从 store 获取 token
 apiClient.interceptors.request.use(
-  async (config) => {
-    const token = await AsyncStorage.getItem('adminToken');
+  (config) => {
+    const token = useAdminStore.getState().adminInfo?.token;
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.token = token;
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// 响应拦截器：统一处理错误（如 token 过期）
+// 响应拦截器：处理 401（token 过期等）
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // 可以在这里处理 401 等错误
+    if (error.response?.status === 401) {
+      // token 无效，自动登出
+      useAdminStore.getState().logout();
+      // 可在此触发全局导航跳转登录页，但需要额外处理（如使用事件总线或导航 ref）
+    }
     return Promise.reject(error);
   }
 );

@@ -41,7 +41,7 @@ export const createAssignInfo = async (params: CreateAssignInfoParams): Promise<
 };
 //根据ID获取分配信息
 export const getAssignInfoById = async (id: number): Promise<AssignInfoResponse> => {
-    const response = await apiClient.get<AssignInfoResponse>('/assign-info/select/${id}');
+    const response = await apiClient.get<AssignInfoResponse>(`/assign-info/select/${id}`);
     return response.data;
 };
 //获取所有分配信息
@@ -51,17 +51,17 @@ export const getAllAssignInfos = async (): Promise<AssignInfoListResponse> => {
 };
 //根据服务员ID获取分配信息
 export const getAssignInfosByWaiterId = async (waiterId: number): Promise<AssignInfoListResponse> => {
-    const response = await apiClient.get<AssignInfoListResponse>('/assign-info/waiter/${waiterId}');
+    const response = await apiClient.get<AssignInfoListResponse>(`/assign-info/waiter/${waiterId}`);
     return response.data;
 };
 //根据包厢ID获取分配信息
 export const getAssignInfosByRoomId = async (roomId: number): Promise<AssignInfoListResponse> => {
-    const response = await apiClient.get<AssignInfoListResponse>('/assign-info/room/${roomId}');
+    const response = await apiClient.get<AssignInfoListResponse>(`/assign-info/room/${roomId}`);
     return response.data;
 };
 //根据管理员ID获取分配信息
 export const getAssignInfosByAdminId = async (adminId: number): Promise<AssignInfoListResponse> => {
-    const response = await apiClient.get<AssignInfoListResponse>('/assign-info/admin/${adminId}');
+    const response = await apiClient.get<AssignInfoListResponse>(`/assign-info/admin/${adminId}`);
     return response.data;
 };
 //根据日期查询分配信息
@@ -71,6 +71,6 @@ export const getAssignInfosByDate = async (date: string): Promise<AssignInfoList
 };
 //删除分配信息
 export const deleteAssignInfo = async (id: number): Promise<DeleteAssignInfoResponse> => {
-    const response = await apiClient.delete<DeleteAssignInfoResponse>('/assign-info/delete/${id}');
+    const response = await apiClient.delete<DeleteAssignInfoResponse>(`/assign-info/delete/${id}`);
     return response.data;
 };
