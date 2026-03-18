@@ -18,12 +18,12 @@ public class OrderDTO {
     /**
      * 主键ID
      */
+    @NotNull(message = "订单ID不能为空")
     private Long id;
 
     /**
      * 订单编号
      */
-    @NotNull(message = "订单号不能为空")
     private String orderNo;
 
     /**

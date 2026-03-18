@@ -1,5 +1,6 @@
 package com.fire.firepalaceorderingsys.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,14 @@ public class AiRecommendLogDTO {
     /**
      * 用户ID
      */
+    @NotNull(message = "用户ID不能为空")
     private Long userId;
 
     /**
-     * 包厢ID
+     * 订单ID
      */
-    private Long roomId;
+    @NotNull(message = "订单ID不能为空")
+    private Long orderId;
 
     /**
      * 用餐人数

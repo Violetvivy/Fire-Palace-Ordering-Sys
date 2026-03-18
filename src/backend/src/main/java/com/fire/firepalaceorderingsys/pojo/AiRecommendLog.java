@@ -26,9 +26,9 @@ public class AiRecommendLog {
     private Long userId;
 
     /**
-     * 包厢ID
+     * 订单ID
      */
-    private Long roomId;
+    private Long orderId;
 
     /**
      * 用餐人数
