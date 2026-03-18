@@ -27,7 +27,11 @@
     "confirm":"Confirm",
     "error":"Error",
     "success":"Success",
-    "failed":"Failed"
+    "failed":"Failed",
+    "notSpicy":"Not Spicy",
+    "mildlySpicy":"Mildly Spicy",
+    "mediumSpicy":"Medium Spicy",
+    "noSeafood":"No Seafood"
   },
   "login":{
     "guestLogin":"Guest Login",
@@ -47,5 +51,28 @@
     "bindSuccess":"Binded the box successfully",
     "completeInfor":"Please fill in the complete information",
     "bindBoxFirst":"Please bind the box first"
+  },
+  "menu":{
+    "nutrition":"Nutrition",
+    "fullPortion":"Full Portion",
+    "halfPortion":"Half Portion"
+  },
+  "aiRecommend":{
+    "title":"Lantern Butler",
+    "tapToStart":"Tap to Start",
+    "selectedList":"Selected Items",
+    "totalAmount":"Total Amount",
+    "startTheFeast":"Start the Feast",
+    "dietaryRestrictions":"Dietary Restrictions",
+    "preferences":"Preferences",
+    "partySize":"Party Size",
+    "budget":"Budget",
+    "diningScene":"Dining Occasion",
+    "businessBanquet":"Business Banquet",
+    "familyGathering":"Family Gathering",
+    "friendsDrinks":"Drinks with Friends",
+    "structuredDisplay":"Structured View",
+    "itemList":"Item List",
+    "preMealCheck":"Pre-Meal Check"
   }
 }
