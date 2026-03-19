@@ -1,5 +1,7 @@
 package com.fire.firepalaceorderingsys.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,23 +17,26 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DishDTO {
     /**
-     * 主键ID
+     * 主键ID（更新时必填）
      */
     private Long id;
 
     /**
      * 菜品名称
      */
+    @NotBlank(message = "菜品名称不能为空")
     private String name;
 
     /**
      * 分类ID
      */
+    @NotNull(message = "分类ID不能为空")
     private Long categoryId;
 
     /**
      * 销售价格
      */
+    @NotNull(message = "销售价格不能为空")
     private BigDecimal price;
 
     /**
@@ -52,6 +57,7 @@ public class DishDTO {
     /**
      * 菜品图片URL
      */
+    @NotBlank(message = "菜品图片不能为空")
     private String imageUrl;
 
     /**
@@ -62,7 +68,13 @@ public class DishDTO {
     /**
      * 菜品描述
      */
+    @NotBlank(message = "菜品描述不能为空")
     private String description;
+
+    /**
+     * 文化故事
+     */
+    private String culturalStory;
 
     /**
      * 状态：1上架，0下架

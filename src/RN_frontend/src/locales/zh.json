@@ -27,7 +27,11 @@
     "confirm":"确认",
     "error":"错误",
     "success":"成功",
-    "failed":"失败"
+    "failed":"失败",
+    "notSpicy":"不辣",
+    "mildlySpicy":"微辣",
+    "mediumSpicy":"中辣",
+    "noSeafood":"不吃海鲜"
   },
   "login":{
     "guestLogin":"客人登录",
@@ -47,5 +51,28 @@
     "bindSuccess":"已绑定包厢",
     "completeInfor":"请填写完整信息",
     "bindBoxFirst":"请先绑定包厢"
+  },
+  "menu":{
+    "nutrition":"营养",
+    "fullPortion":"整份",
+    "halfPortion":"半份"
+  },
+  "aiRecommend":{
+    "title":"提灯管家",
+    "tapToStart":"点击开启",
+    "selectedList":"已选清单",
+    "totalAmount":"合计金额",
+    "startTheFeast":"开启盛宴",
+    "dietaryRestrictions":"忌口",
+    "preferences":"偏好",
+    "partySize":"人数",
+    "budget":"预算",
+    "diningScene":"用餐场景",
+    "businessBanquet":"商务宴请",
+    "familyGathering":"家庭聚会",
+    "friendsDrinks":"挚友小酌",
+    "structuredDisplay":"结构化展示",
+    "itemList":"清单列表",
+    "preMealCheck":"餐前校验"
   }
 }
