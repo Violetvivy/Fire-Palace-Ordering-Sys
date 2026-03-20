@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fire.firepalaceorderingsys.mapper.UserProfileMapper">
+    <!-- 如果需要复杂的SQL查询，可以在这里添加 -->
+    
+    <!-- 结果映射配置 -->
+    <resultMap id="UserProfileResultMap" type="com.fire.firepalaceorderingsys.pojo.UserProfile">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="avgSpend" column="avg_spend" />
+        <result property="favoriteCategory" column="favorite_category" />
+        <result property="spicyPreference" column="spicy_preference" />
+        <result property="visitCount" column="visit_count" />
+        <result property="lastVisitTime" column="last_visit_time" />
+    </resultMap>
+
+</mapper>

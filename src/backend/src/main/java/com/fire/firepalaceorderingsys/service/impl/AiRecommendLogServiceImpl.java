@@ -3,7 +3,9 @@ package com.fire.firepalaceorderingsys.service.impl;
 import com.fire.firepalaceorderingsys.dto.AiRecommendLogDTO;
 import com.fire.firepalaceorderingsys.exception.BusinessException;
 import com.fire.firepalaceorderingsys.mapper.AiRecommendLogMapper;
+import com.fire.firepalaceorderingsys.mapper.UserProfileMapper;
 import com.fire.firepalaceorderingsys.pojo.AiRecommendLog;
+import com.fire.firepalaceorderingsys.pojo.UserProfile;
 import com.fire.firepalaceorderingsys.service.AiRecommendLogService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class AiRecommendLogServiceImpl implements AiRecommendLogService {
 
     @Autowired
     private AiRecommendLogMapper aiRecommendLogMapper;
+
+    @Autowired
+    private UserProfileMapper userProfileMapper;
 
     /**
      * 创建AI推荐日志
@@ -32,7 +37,19 @@ public class AiRecommendLogServiceImpl implements AiRecommendLogService {
         if (aiRecommendLog.getCreatedAt() == null) {
             aiRecommendLog.setCreatedAt(LocalDateTime.now());
         }
-        
+
+        // 创建新用户画像
+        if(userProfileMapper.checkExistsByUserId(aiRecommendLogDTO.getUserId())==0){
+            UserProfile userProfile = new UserProfile();
+            userProfile.setUserId(aiRecommendLogDTO.getUserId());
+
+
+            // 更新偏好标签，待定
+
+
+            userProfileMapper.insert(userProfile);
+            userProfileMapper.updateVisitInfo(aiRecommendLogDTO.getUserId());
+        }
         aiRecommendLogMapper.insert(aiRecommendLog);
         return aiRecommendLog;
     }

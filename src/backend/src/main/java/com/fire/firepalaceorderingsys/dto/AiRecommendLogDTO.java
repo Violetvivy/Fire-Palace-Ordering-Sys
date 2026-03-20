@@ -1,5 +1,6 @@
 package com.fire.firepalaceorderingsys.dto;
 
+import com.fire.firepalaceorderingsys.annotation.ValidJson;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,11 +46,13 @@ public class AiRecommendLogDTO {
     /**
      * 预选偏好标签(JSON格式)
      */
+    @ValidJson
     private String preTag;
 
     /**
      * AI推荐结果（JSON格式）
      */
+    @ValidJson
     private String recommendResult;
 
     /**
