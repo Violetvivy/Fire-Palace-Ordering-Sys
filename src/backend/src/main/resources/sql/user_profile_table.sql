@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS user_profile (
     id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
     user_id BIGINT NOT NULL COMMENT '用户ID',
     avg_spend DECIMAL(10,2) DEFAULT 0 COMMENT '平均消费金额',
-    favorite_category VARCHAR(100) NOT NULL COMMENT '最喜爱的菜品分类',
+    favorite_category VARCHAR(100) COMMENT '最喜爱的菜品分类',
     spicy_preference TINYINT DEFAULT 0 COMMENT '辣度偏好：0不辣，1微辣，2中辣，3重辣',
     visit_count INT DEFAULT 0 COMMENT '到店次数',
     last_visit_time DATETIME NOT NULL COMMENT '最后到店时间',

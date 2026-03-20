@@ -187,11 +187,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateOrderInfo(OrderDTO orderDTO) {
-        if (orderDTO.getOrderNo() == null || orderDTO.getOrderNo().trim().isEmpty()) {
-            throw new BusinessException("订单号不能为空");
+        if (orderDTO.getId() == null) {
+            throw new BusinessException("订单ID不能为空");
         }
 
-        Order existingOrder = orderMapper.selectByOrderNo(orderDTO.getOrderNo());
+        Order existingOrder = orderMapper.selectById(orderDTO.getId());
         if (existingOrder == null) {
             throw new BusinessException("订单不存在");
         }
