@@ -41,6 +41,36 @@ public class UserProfile {
     private Integer spicyPreference;
 
     /**
+     * 甜度偏好：0无甜，1微甜，2中甜，3重甜
+     */
+    private Integer sweetPreference;
+
+    /**
+     * 咸度偏好：0清淡，1适中，2偏咸
+     */
+    private Integer saltyPreference;
+
+    /**
+     * 油脂偏好：0少油，1适中，2多油
+     */
+    private Integer oilPreference;
+
+    /**
+     * 过敏食材（JSON格式）
+     */
+    private String allergyIngredients;
+
+    /**
+     * 忌口信息（JSON格式）
+     */
+    private String dietaryRestrictions;
+
+    /**
+     * 常点菜品（JSON格式，存储菜品ID数组）
+     */
+    private String frequentDishes;
+
+    /**
      * 到店次数
      */
     private Integer visitCount;

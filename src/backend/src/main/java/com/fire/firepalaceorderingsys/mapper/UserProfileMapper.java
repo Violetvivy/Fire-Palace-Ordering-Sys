@@ -11,8 +11,8 @@ public interface UserProfileMapper {
     /**
      * 插入用户偏好信息
      */
-    @Insert("INSERT INTO user_profile (user_id, avg_spend, favorite_category, spicy_preference, last_visit_time, created_at) " +
-            "VALUES (#{userId}, #{avgSpend}, #{favoriteCategory}, #{spicyPreference}, NOW(), NOW())")
+    @Insert("INSERT INTO user_profile (user_id, avg_spend, favorite_category, spicy_preference, sweet_preference, salty_preference, oil_preference, allergy_ingredients, dietary_restrictions, frequent_dishes, last_visit_time, created_at) " +
+            "VALUES (#{userId}, #{avgSpend}, #{favoriteCategory}, #{spicyPreference}, #{sweetPreference}, #{saltyPreference}, #{oilPreference}, #{allergyIngredients}, #{dietaryRestrictions}, #{frequentDishes}, NOW(), NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(UserProfile userProfile);
 
@@ -44,6 +44,12 @@ public interface UserProfileMapper {
             "    <if test='avgSpend != null'>avg_spend = #{avgSpend},</if>" +
             "    <if test='favoriteCategory != null'>favorite_category = #{favoriteCategory},</if>" +
             "    <if test='spicyPreference != null'>spicy_preference = #{spicyPreference},</if>" +
+            "    <if test='sweetPreference != null'>sweet_preference = #{sweetPreference},</if>" +
+            "    <if test='saltyPreference != null'>salty_preference = #{saltyPreference},</if>" +
+            "    <if test='oilPreference != null'>oil_preference = #{oilPreference},</if>" +
+            "    <if test='allergyIngredients != null'>allergy_ingredients = #{allergyIngredients},</if>" +
+            "    <if test='dietaryRestrictions != null'>dietary_restrictions = #{dietaryRestrictions},</if>" +
+            "    <if test='frequentDishes != null'>frequent_dishes = #{frequentDishes},</if>" +
             "    <if test='visitCount != null'>visit_count = #{visitCount},</if>" +
             "    <if test='lastVisitTime != null'>last_visit_time = #{lastVisitTime},</if>" +
             "</set>" +

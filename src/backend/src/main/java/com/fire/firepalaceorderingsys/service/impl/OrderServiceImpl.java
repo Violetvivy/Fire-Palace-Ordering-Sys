@@ -1,13 +1,18 @@
 package com.fire.firepalaceorderingsys.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fire.firepalaceorderingsys.dto.OrderDTO;
 import com.fire.firepalaceorderingsys.exception.BusinessException;
 import com.fire.firepalaceorderingsys.mapper.AssignInfoMapper;
+import com.fire.firepalaceorderingsys.mapper.OrderItemMapper;
 import com.fire.firepalaceorderingsys.mapper.OrderMapper;
 import com.fire.firepalaceorderingsys.mapper.RoomMapper;
+import com.fire.firepalaceorderingsys.mapper.UserProfileMapper;
 import com.fire.firepalaceorderingsys.pojo.AssignInfo;
 import com.fire.firepalaceorderingsys.pojo.Order;
 import com.fire.firepalaceorderingsys.pojo.Room;
+import com.fire.firepalaceorderingsys.pojo.UserProfile;
 import com.fire.firepalaceorderingsys.service.OrderService;
 import com.fire.firepalaceorderingsys.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +25,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,6 +32,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+
+    @Autowired
+    private UserProfileMapper userProfileMapper;
 
     @Autowired
     private RoomMapper roomMapper;
@@ -56,9 +66,6 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 创建订单
-     * @param roomName 包厢名
-     * @param userId 用户ID
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -116,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPeopleCount(0); // 默认0，后续可更新
         order.setBudget(BigDecimal.ZERO); // 默认0，后续可更新
         order.setTotalAmount(BigDecimal.ZERO); // 默认0
-        order.setStatus(0); // 0已下单
+        order.setStatus(0); // 0未下单
         order.setCreatedAt(LocalDateTime.now());
         order.setDeletedAt(null);
 
@@ -133,41 +140,65 @@ public class OrderServiceImpl implements OrderService {
         return orderVO;
     }
 
+    /**
+     * 根据ID获取订单
+     */
     @Override
     public Order getOrderById(Long id) {
         return orderMapper.selectById(id);
     }
 
+    /**
+     * 根据订单号获取订单
+     */
     @Override
     public Order getOrderByOrderNo(String orderNo) {
         return orderMapper.selectByOrderNo(orderNo);
     }
 
+    /**
+     * 根据用户ID获取订单列表
+     */
     @Override
     public List<Order> getOrdersByUserId(Long userId) {
         return orderMapper.selectByUserId(userId);
     }
 
+    /**
+     * 根据服务员ID获取订单列表
+     */
     @Override
     public List<Order> getOrdersByWaiterId(Long waiterId) {
         return orderMapper.selectByWaiterId(waiterId);
     }
 
+    /**
+     * 根据包厢ID获取订单列表
+     */
     @Override
     public List<Order> getOrdersByRoomId(Long roomId) {
         return orderMapper.selectByRoomId(roomId);
     }
 
+    /**
+     * 获取所有订单
+     */
     @Override
     public List<Order> getAllOrders() {
         return orderMapper.selectAll();
     }
 
+    /**
+     * 根据状态获取订单列表
+     */
     @Override
     public List<Order> getOrdersByStatus(Integer status) {
         return orderMapper.selectByStatus(status);
     }
 
+    /**
+     * 更新订单状态
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateOrderStatus(Long id, Integer status) {
@@ -184,6 +215,9 @@ public class OrderServiceImpl implements OrderService {
         log.info("订单状态更新成功: id={}, status={}", id, status);
     }
 
+    /**
+     * 更新订单信息（主要更新就餐人数和预算）
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateOrderInfo(OrderDTO orderDTO) {
@@ -215,6 +249,9 @@ public class OrderServiceImpl implements OrderService {
                 orderDTO.getOrderNo());
     }
 
+    /**
+     * 删除订单
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteOrder(Long id) {
@@ -229,5 +266,105 @@ public class OrderServiceImpl implements OrderService {
         }
         
         log.info("订单删除成功: id={}, orderNo={}", id, order.getOrderNo());
+    }
+
+    /**
+     * 下单（将购物车中的菜品提交，status从0改为1）
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void submitOrder(Long orderId) {
+        // 1. 检查订单是否存在且状态为0（未下单）
+        Order order = orderMapper.selectById(orderId);
+        if (order == null) {
+            throw new BusinessException("订单不存在");
+        }
+        
+        if (order.getStatus() != 0) {
+            throw new BusinessException("订单状态不正确，无法下单");
+        }
+        
+        // 2. 检查购物车中是否有菜品
+        int cartItemCount = orderItemMapper.countCartItemsByOrderId(orderId);
+        if (cartItemCount == 0) {
+            throw new BusinessException("购物车为空，无法下单");
+        }
+        
+        // 3. 更新订单状态为1（已下单）
+        int result = orderMapper.updateStatus(orderId, 1);
+        if (result <= 0) {
+            throw new BusinessException("更新订单状态失败");
+        }
+        
+        // 4. 更新order_item的is_cart状态为0（已下单）
+        orderItemMapper.updateCartStatusByOrderId(orderId, 0);
+        
+        // 5. 更新用户常点菜品
+        updateUserFrequentDishes(order.getUserId(), orderId);
+        
+        log.info("订单下单成功: orderId={}, orderNo={}, userId={}, cartItemCount={}", 
+                orderId, order.getOrderNo(), order.getUserId(), cartItemCount);
+    }
+
+    /**
+     * 更新用户常点菜品
+     */
+    private void updateUserFrequentDishes(Long userId, Long orderId) {
+        try {
+            // 1. 获取购物车中的菜品ID列表
+            List<Long> dishIds = orderItemMapper.selectCartDishIdsByOrderId(orderId);
+            if (dishIds == null || dishIds.isEmpty()) {
+                return;
+            }
+
+            // 2. 获取用户画像
+            UserProfile userProfile = userProfileMapper.selectByUserId(userId);
+            if (userProfile == null) {
+                // 如果用户画像不存在，创建新的
+                userProfile = new UserProfile();
+                userProfile.setUserId(userId);
+                userProfileMapper.insert(userProfile);
+                userProfile = userProfileMapper.selectByUserId(userId);
+            }
+
+            // 3. 解析现有的常点菜品
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Long> existingDishIds = null;
+
+            if (userProfile.getFrequentDishes() != null && !userProfile.getFrequentDishes().trim().isEmpty()) {
+                try {
+                    existingDishIds = objectMapper.readValue(userProfile.getFrequentDishes(),
+                            new TypeReference<List<Long>>() {});
+                } catch (Exception e) {
+                    // JSON解析失败，重新初始化
+                    existingDishIds = new java.util.ArrayList<>();
+                }
+            } else {
+                existingDishIds = new java.util.ArrayList<>();
+            }
+
+            // 4. 合并菜品ID（去重，限制最多保存10个）
+            for (Long dishId : dishIds) {
+                if (!existingDishIds.contains(dishId)) {
+                    existingDishIds.add(dishId);
+                }
+            }
+
+            // 限制最多10个常点菜品
+            if (existingDishIds.size() > 10) {
+                existingDishIds = existingDishIds.subList(existingDishIds.size() - 10, existingDishIds.size());
+            }
+
+            // 5. 更新用户画像
+            userProfile.setFrequentDishes(objectMapper.writeValueAsString(existingDishIds));
+            userProfileMapper.update(userProfile);
+
+            log.info("用户常点菜品更新成功: userId={}, dishCount={}", userId, existingDishIds.size());
+
+        } catch (Exception e) {
+            // 更新失败不影响下单流程，只记录日志
+            log.error("更新用户常点菜品失败: userId={}, orderId={}, error={}",
+                    userId, orderId, e.getMessage(), e);
+        }
     }
 }

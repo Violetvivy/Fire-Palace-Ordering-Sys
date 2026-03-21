@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `order` (
     people_count INT NOT NULL COMMENT '用餐人数',
     budget DECIMAL(10,2) NOT NULL COMMENT '预算金额',
     total_amount DECIMAL(10,2) DEFAULT 0 COMMENT '实际总金额',
-    status TINYINT NOT NULL DEFAULT 0 COMMENT '订单状态：0已下单，1已接单，2已完成',
+    status TINYINT NOT NULL DEFAULT 0 COMMENT '订单状态：0未下单，1已下单，2已完成',
     waiter_id BIGINT NOT NULL COMMENT '服务员ID',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     deleted_at DATETIME DEFAULT NUll COMMENT '删除时间',

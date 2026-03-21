@@ -11,12 +11,14 @@ import java.util.List;
 public interface OrderService {
 
     /**
-     * 创建订单
-     * @param roomName 包厢名
-     * @param userId 用户ID
-     * @return 订单VO
+     * 创建订单（进入包厢时创建，status=0）
      */
     OrderVO createOrder(String roomName, Long userId);
+
+    /**
+     * 下单（将购物车中的菜品提交，status从0改为1）
+     */
+    void submitOrder(Long orderId);
 
     /**
      * 根据ID获取订单

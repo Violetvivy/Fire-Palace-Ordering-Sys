@@ -48,4 +48,9 @@ public class OrderItem {
      * 菜品状态：0制作中 1上菜中 2已上菜
      */
     private Integer orderItemStatus;
+
+    /**
+     * 是否为购物车状态：1-是（购物车中），0-否（已下单）
+     */
+    private Integer isCart;
 }

@@ -160,6 +160,19 @@ public class OrderController {
     }
 
     /**
+     * 下单（将购物车中的菜品提交）
+     */
+    @PostMapping("/submit/{orderId}")
+    public Result submitOrder(@PathVariable Long orderId) {
+        try {
+            orderService.submitOrder(orderId);
+            return Result.success("下单成功");
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
      * 删除订单
      */
     @DeleteMapping("/delete/{id}")

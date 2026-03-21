@@ -11,6 +11,12 @@
         <result property="avgSpend" column="avg_spend" />
         <result property="favoriteCategory" column="favorite_category" />
         <result property="spicyPreference" column="spicy_preference" />
+        <result property="sweetPreference" column="sweet_preference" />
+        <result property="saltyPreference" column="salty_preference" />
+        <result property="oilPreference" column="oil_preference" />
+        <result property="allergyIngredients" column="allergy_ingredients" />
+        <result property="dietaryRestrictions" column="dietary_restrictions" />
+        <result property="frequentDishes" column="frequent_dishes" />
         <result property="visitCount" column="visit_count" />
         <result property="lastVisitTime" column="last_visit_time" />
     </resultMap>

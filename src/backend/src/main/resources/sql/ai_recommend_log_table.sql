@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS ai_recommend_log (
     pre_tag JSON NOT NULL COMMENT '预选偏好标签(JSON格式)',
     recommend_result JSON COMMENT 'AI推荐结果（JSON格式）',
     actual_order_amount DECIMAL(10,2) COMMENT '实际订单金额',
-    accept_rate FLOAT COMMENT '推荐接受率',
+    accept_rate TINYINT COMMENT '是否接受推荐',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     INDEX idx_user_id (user_id),
     INDEX idx_order_id (order_id),

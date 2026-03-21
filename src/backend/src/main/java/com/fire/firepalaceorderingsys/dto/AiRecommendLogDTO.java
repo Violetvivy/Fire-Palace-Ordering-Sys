@@ -61,9 +61,9 @@ public class AiRecommendLogDTO {
     private BigDecimal actualOrderAmount;
 
     /**
-     * 推荐接受率
+     * 是否接受推荐：0-不接受，1-接受
      */
-    private Float acceptRate;
+    private Integer acceptRate;
 
     /**
      * 创建时间
