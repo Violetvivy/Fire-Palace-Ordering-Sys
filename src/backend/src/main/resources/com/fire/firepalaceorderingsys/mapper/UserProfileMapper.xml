@@ -19,6 +19,8 @@
         <result property="frequentDishes" column="frequent_dishes" />
         <result property="visitCount" column="visit_count" />
         <result property="lastVisitTime" column="last_visit_time" />
+        <result property="nativePlace" column="native_place" />
+        <result property="preference" column="preference" />
     </resultMap>
 
 </mapper>
