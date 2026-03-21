@@ -2,6 +2,7 @@ package com.fire.firepalaceorderingsys.service;
 
 import com.fire.firepalaceorderingsys.dto.OrderDTO;
 import com.fire.firepalaceorderingsys.pojo.Order;
+import com.fire.firepalaceorderingsys.vo.BillVO;
 import com.fire.firepalaceorderingsys.vo.OrderVO;
 import org.springframework.stereotype.Service;
 
@@ -72,9 +73,11 @@ public interface OrderService {
 
     /**
      * 餐前分析校验
-     * 获取订单的购物车商品列表和AI推荐偏好，打包发送给AI校验服务
-     * @param orderId 订单ID
-     * @return AI校验结果
      */
     Object preMealAnalysis(Long orderId);
+
+    /**
+     * 结束用餐
+     */
+    BillVO finishMeal(Long orderId, String waiterWorkNo);
 }

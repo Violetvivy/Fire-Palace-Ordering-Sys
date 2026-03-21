@@ -20,7 +20,7 @@ public interface UserMapper {
     int insert(User user);
 
     /**
-     * 查询会员
+     * 手机号查询会员
      */
     @Select("SELECT * FROM user WHERE phone = #{phone} AND deleted_at IS NULL")
     User selectByPhone(String phone);
@@ -30,4 +30,10 @@ public interface UserMapper {
      */
     @Update("UPDATE user SET deleted_at = NOW() WHERE phone = #{phoen}")
     int deleteByPhone(String phone);
+
+    /**
+     * ID查询会员
+     */
+    @Select("SELECT * FROM user WHERE id = #{userId} AND deleted_at IS NULL")
+    User selectById(Long userId);
 }

@@ -115,4 +115,16 @@ public class OrderItemController {
             return Result.error(e.getMessage());
         }
     }
+
+    /**
+     * 菜品跟踪接口，直接返回成功
+     */
+    @PostMapping("/track")
+    public Result trackDish(@RequestParam String orderNo, @RequestParam Long dishId) {
+        try {
+            return Result.success();
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
 }
