@@ -69,4 +69,12 @@ public interface OrderService {
      * 删除订单
      */
     void deleteOrder(Long id);
+
+    /**
+     * 餐前分析校验
+     * 获取订单的购物车商品列表和AI推荐偏好，打包发送给AI校验服务
+     * @param orderId 订单ID
+     * @return AI校验结果
+     */
+    Object preMealAnalysis(Long orderId);
 }

@@ -160,6 +160,20 @@ public class OrderController {
     }
 
     /**
+     * 餐前分析与校验
+     * 获取订单的购物车商品列表和AI推荐偏好，打包发送给AI校验服务
+     */
+    @GetMapping("/pre-meal-analysis/{orderId}")
+    public Result preMealAnalysis(@PathVariable Long orderId) {
+        try {
+            Object aiResponse = orderService.preMealAnalysis(orderId);
+            return Result.success(aiResponse);
+        } catch (Exception e) {
+            return Result.error("餐前分析失败: " + e.getMessage());
+        }
+    }
+
+    /**
      * 下单（将购物车中的菜品提交）
      */
     @PostMapping("/submit/{orderId}")
