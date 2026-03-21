@@ -1,0 +1,44 @@
+### 0. 先调用管理员登录接口，获取token
+POST http://localhost:8080/admin/login
+Content-Type: application/json
+
+{
+  "adminname": "admin_test",
+  "phone": "18580607948",
+  "password": "Violet12138"
+}
+
+### 1. 测试新增分类接口（POST）
+POST http://localhost:8080/category/add
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlcm5hbWUiOiJhZG1pbl90ZXN0IiwiaWF0IjoxNzczODI2NDQ4LCJleHAiOjE3NzQ0MzEyNDh9.HJ3_i7cU-s7Nr-bbgNWnp8IVwTfnezajZVsOFD9fj_o
+
+{
+  "name": "热菜",
+  "parentId": 0,
+  "sortOrder": 1
+}
+
+### 2. 测试查询所有分类列表接口（GET）
+GET http://localhost:8080/category/list
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlcm5hbWUiOiJhZG1pbl90ZXN0IiwiaWF0IjoxNzczODI2NDQ4LCJleHAiOjE3NzQ0MzEyNDh9.HJ3_i7cU-s7Nr-bbgNWnp8IVwTfnezajZVsOFD9fj_o
+
+### 3. 测试根据id查询分类详情接口（GET）
+GET http://localhost:8080/category/get/2
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlcm5hbWUiOiJhZG1pbl90ZXN0IiwiaWF0IjoxNzczODI2NDQ4LCJleHAiOjE3NzQ0MzEyNDh9.HJ3_i7cU-s7Nr-bbgNWnp8IVwTfnezajZVsOFD9fj_o
+
+### 4. 测试修改分类接口（PUT）
+PUT http://localhost:8080/category/update
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlcm5hbWUiOiJhZG1pbl90ZXN0IiwiaWF0IjoxNzczODI2NDQ4LCJleHAiOjE3NzQ0MzEyNDh9.HJ3_i7cU-s7Nr-bbgNWnp8IVwTfnezajZVsOFD9fj_o
+
+{
+  "id": 2,
+  "name": "热门热菜",
+  "parentId": 0,
+  "sortOrder": 2
+}
+
+### 5. 测试删除分类接口（DELETE）
+DELETE http://localhost:8080/category/delete/2
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlcm5hbWUiOiJhZG1pbl90ZXN0IiwiaWF0IjoxNzczODI2NDQ4LCJleHAiOjE3NzQ0MzEyNDh9.HJ3_i7cU-s7Nr-bbgNWnp8IVwTfnezajZVsOFD9fj_o
