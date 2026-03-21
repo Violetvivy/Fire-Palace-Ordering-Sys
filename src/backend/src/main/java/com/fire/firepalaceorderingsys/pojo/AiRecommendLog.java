@@ -1,5 +1,6 @@
 package com.fire.firepalaceorderingsys.pojo;
 
+import com.fire.firepalaceorderingsys.annotation.ValidJson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,11 +44,13 @@ public class AiRecommendLog {
     /**
      * 预选偏好标签(JSON格式)
      */
+    @ValidJson
     private String preTag;
 
     /**
      * AI推荐结果（JSON格式）
      */
+    @ValidJson
     private String recommendResult;
 
     /**

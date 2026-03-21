@@ -16,6 +16,7 @@ create table user_profile
     allergy_ingredients  json                                     null comment '过敏食材（JSON格式）',
     dietary_restrictions json                                     null comment '忌口信息（JSON格式）',
     frequent_dishes      json                                     null comment '常点菜品（JSON格式，存储菜品ID数组）',
+    native_place         varchar(100)                             null comment '用户籍贯',
     constraint uk_user_id
         unique (user_id),
     constraint fk_user_profile_user
@@ -38,4 +39,3 @@ create index idx_salty_preference
 
 create index idx_sweet_preference
     on user_profile (sweet_preference);
-

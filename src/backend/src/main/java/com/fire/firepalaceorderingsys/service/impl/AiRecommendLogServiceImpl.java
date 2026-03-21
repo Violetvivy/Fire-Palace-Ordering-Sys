@@ -215,6 +215,14 @@ public class AiRecommendLogServiceImpl implements AiRecommendLogService {
                 }
             }
             
+            // 解析籍贯信息
+            if (preTagMap.containsKey("nativePlace")) {
+                Object nativePlace = preTagMap.get("nativePlace");
+                if (nativePlace != null) {
+                    userProfile.setNativePlace(nativePlace.toString());
+                }
+            }
+            
         } catch (Exception e) {
             System.err.println("解析preTag JSON失败: " + e.getMessage());
         }

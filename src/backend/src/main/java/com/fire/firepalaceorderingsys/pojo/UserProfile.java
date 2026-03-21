@@ -1,5 +1,6 @@
 package com.fire.firepalaceorderingsys.pojo;
 
+import com.fire.firepalaceorderingsys.annotation.ValidJson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,16 +59,19 @@ public class UserProfile {
     /**
      * 过敏食材（JSON格式）
      */
+    @ValidJson
     private String allergyIngredients;
 
     /**
      * 忌口信息（JSON格式）
      */
+    @ValidJson
     private String dietaryRestrictions;
 
     /**
      * 常点菜品（JSON格式，存储菜品ID数组）
      */
+    @ValidJson
     private String frequentDishes;
 
     /**
@@ -79,4 +83,9 @@ public class UserProfile {
      * 最后到店时间
      */
     private LocalDateTime lastVisitTime;
+
+    /**
+     * 用户籍贯
+     */
+    private String nativePlace;
 }
