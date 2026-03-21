@@ -9,6 +9,7 @@ import com.fire.firepalaceorderingsys.pojo.*;
 import com.fire.firepalaceorderingsys.service.AiRecommendLogService;
 import com.fire.firepalaceorderingsys.service.OrderItemService;
 import com.fire.firepalaceorderingsys.service.OrderService;
+import com.fire.firepalaceorderingsys.service.UserService;
 import com.fire.firepalaceorderingsys.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -54,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
     
     @Autowired
     private UserMapper userMapper;
+    
+    @Autowired
+    private UserService userService;
 
     /**
      * 生成订单号：orNo-随机数
@@ -497,7 +501,17 @@ public class OrderServiceImpl implements OrderService {
                 throw new BusinessException("包厢不存在");
             }
             
-            // 9. 构建BillVO返回
+            // 9. 调用退出登录逻辑
+            try {
+                userService.logout(order.getUserId());
+                log.info("用户退出登录成功: userId={}, orderId={}", order.getUserId(), orderId);
+            } catch (Exception e) {
+                // 退出登录失败不影响主流程，只记录日志
+                log.warn("用户退出登录失败: userId={}, orderId={}, error={}", 
+                        order.getUserId(), orderId, e.getMessage());
+            }
+            
+            // 10. 构建BillVO返回
             com.fire.firepalaceorderingsys.vo.BillVO billVO = new com.fire.firepalaceorderingsys.vo.BillVO();
             billVO.setUserPhone(user.getPhone());
             billVO.setRoomName(room.getRoomName());
