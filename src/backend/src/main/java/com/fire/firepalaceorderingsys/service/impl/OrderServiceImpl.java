@@ -4,15 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fire.firepalaceorderingsys.dto.OrderDTO;
 import com.fire.firepalaceorderingsys.exception.BusinessException;
-import com.fire.firepalaceorderingsys.mapper.AssignInfoMapper;
-import com.fire.firepalaceorderingsys.mapper.OrderItemMapper;
-import com.fire.firepalaceorderingsys.mapper.OrderMapper;
-import com.fire.firepalaceorderingsys.mapper.RoomMapper;
-import com.fire.firepalaceorderingsys.mapper.UserProfileMapper;
-import com.fire.firepalaceorderingsys.pojo.AssignInfo;
-import com.fire.firepalaceorderingsys.pojo.Order;
-import com.fire.firepalaceorderingsys.pojo.Room;
-import com.fire.firepalaceorderingsys.pojo.UserProfile;
+import com.fire.firepalaceorderingsys.mapper.*;
+import com.fire.firepalaceorderingsys.pojo.*;
 import com.fire.firepalaceorderingsys.service.AiRecommendLogService;
 import com.fire.firepalaceorderingsys.service.OrderItemService;
 import com.fire.firepalaceorderingsys.service.OrderService;
@@ -55,6 +48,12 @@ public class OrderServiceImpl implements OrderService {
     
     @Autowired
     private ObjectMapper objectMapper;
+    
+    @Autowired
+    private WaiterMapper waiterMapper;
+    
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 生成订单号：orNo-随机数
@@ -432,6 +431,92 @@ public class OrderServiceImpl implements OrderService {
             return aiResponse;
         } catch (Exception e) {
             throw new BusinessException("餐前分析失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 结束用餐
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public com.fire.firepalaceorderingsys.vo.BillVO finishMeal(Long orderId, String waiterWorkNo) {
+        try {
+            // 1. 获取订单信息
+            Order order = orderMapper.selectById(orderId);
+            if (order == null) {
+                throw new BusinessException("订单不存在");
+            }
+            
+            // 2. 根据订单中的服务员ID获取服务员信息
+            com.fire.firepalaceorderingsys.pojo.Waiter waiter = waiterMapper.selectById(order.getWaiterId());
+            if (waiter == null) {
+                throw new BusinessException("服务员不存在");
+            }
+            
+            // 3. 检查前端传输的服务员工号是否与订单中的服务员一致
+            if (!waiter.getWorkNo().equals(waiterWorkNo)) {
+                throw new BusinessException("服务员工号不匹配，无法结束用餐");
+            }
+            
+            // 4. 检查订单状态是否为已下单
+            if (order.getStatus() != 1) {
+                throw new BusinessException("订单状态不正确，无法结束用餐");
+            }
+            
+            // 5. 根据订单id找到order_item表里所有该订单商品，计算总花销
+            List<com.fire.firepalaceorderingsys.pojo.OrderItem> orderItems = orderItemMapper.selectByOrderId(orderId);
+            BigDecimal totalAmount = BigDecimal.ZERO;
+            
+            for (com.fire.firepalaceorderingsys.pojo.OrderItem item : orderItems) {
+                if (item.getSubtotal() != null) {
+                    totalAmount = totalAmount.add(item.getSubtotal());
+                } else if (item.getPrice() != null && item.getQuantity() != null) {
+                    BigDecimal itemTotal = item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
+                    totalAmount = totalAmount.add(itemTotal);
+                }
+            }
+            
+            // 6. 更新订单状态为已完成（status=2）并填入总金额
+            order.setStatus(2);
+            order.setTotalAmount(totalAmount);
+            
+            int updateResult = orderMapper.updateByOrderNo(order);
+            if (updateResult <= 0) {
+                throw new BusinessException("更新订单状态失败");
+            }
+            
+            // 7. 获取用户信息（用于获取手机号）
+            User user = userMapper.selectById(order.getUserId());
+            if (user == null) {
+                throw new BusinessException("用户不存在");
+            }
+            
+            // 8. 获取包厢信息
+            Room room = roomMapper.selectById(order.getRoomId());
+            if (room == null) {
+                throw new BusinessException("包厢不存在");
+            }
+            
+            // 9. 构建BillVO返回
+            com.fire.firepalaceorderingsys.vo.BillVO billVO = new com.fire.firepalaceorderingsys.vo.BillVO();
+            billVO.setUserPhone(user.getPhone());
+            billVO.setRoomName(room.getRoomName());
+            billVO.setWaiterWorkNo(waiter.getWorkNo());
+            billVO.setPeopleCount(order.getPeopleCount());
+            billVO.setBudget(order.getBudget());
+            billVO.setTotalAmount(totalAmount);
+            billVO.setCreatedAt(order.getCreatedAt());
+            
+            log.info("结束用餐成功: orderId={}, orderNo={}, waiterWorkNo={}, totalAmount={}", 
+                    orderId, order.getOrderNo(), waiterWorkNo, totalAmount);
+            
+            return billVO;
+        } catch (BusinessException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("结束用餐失败: orderId={}, waiterWorkNo={}, error={}", 
+                    orderId, waiterWorkNo, e.getMessage(), e);
+            throw new BusinessException("结束用餐失败: " + e.getMessage());
         }
     }
 }

@@ -174,6 +174,20 @@ public class OrderController {
     }
 
     /**
+     * 结束用餐
+     * 验证服务员身份，更新订单状态为已完成，计算总金额并返回账单信息
+     */
+    @PostMapping("/finish-meal")
+    public Result finishMeal(@RequestParam Long orderId, @RequestParam String waiterWorkNo) {
+        try {
+            com.fire.firepalaceorderingsys.vo.BillVO billVO = orderService.finishMeal(orderId, waiterWorkNo);
+            return Result.success(billVO);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
+
+    /**
      * 下单（将购物车中的菜品提交）
      */
     @PostMapping("/submit/{orderId}")
