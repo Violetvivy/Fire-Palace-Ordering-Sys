@@ -17,6 +17,7 @@ create table user_profile
     dietary_restrictions json                                     null comment '忌口信息（JSON格式）',
     frequent_dishes      json                                     null comment '常点菜品（JSON格式，存储菜品ID数组）',
     native_place         varchar(100)                             null comment '用户籍贯',
+    preference           json                                     null comment '用户偏好（JSON格式）',
     constraint uk_user_id
         unique (user_id),
     constraint fk_user_profile_user

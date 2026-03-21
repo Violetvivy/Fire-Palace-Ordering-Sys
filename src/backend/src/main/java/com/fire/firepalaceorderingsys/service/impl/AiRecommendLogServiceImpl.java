@@ -223,6 +223,14 @@ public class AiRecommendLogServiceImpl implements AiRecommendLogService {
                 }
             }
             
+            // 解析偏好信息
+            if (preTagMap.containsKey("preference")) {
+                Object preference = preTagMap.get("preference");
+                if (preference != null) {
+                    userProfile.setPreference(objectMapper.writeValueAsString(preference));
+                }
+            }
+            
         } catch (Exception e) {
             System.err.println("解析preTag JSON失败: " + e.getMessage());
         }

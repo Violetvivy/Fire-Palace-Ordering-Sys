@@ -11,8 +11,8 @@ public interface UserProfileMapper {
     /**
      * 插入用户偏好信息
      */
-    @Insert("INSERT INTO user_profile (user_id, avg_spend, favorite_category, spicy_preference, sweet_preference, salty_preference, oil_preference, allergy_ingredients, dietary_restrictions, frequent_dishes, native_place, last_visit_time, created_at) " +
-            "VALUES (#{userId}, #{avgSpend}, #{favoriteCategory}, #{spicyPreference}, #{sweetPreference}, #{saltyPreference}, #{oilPreference}, #{allergyIngredients}, #{dietaryRestrictions}, #{frequentDishes}, #{nativePlace}, NOW(), NOW())")
+    @Insert("INSERT INTO user_profile (user_id, avg_spend, favorite_category, spicy_preference, sweet_preference, salty_preference, oil_preference, allergy_ingredients, dietary_restrictions, frequent_dishes, native_place, preference, last_visit_time, created_at) " +
+            "VALUES (#{userId}, #{avgSpend}, #{favoriteCategory}, #{spicyPreference}, #{sweetPreference}, #{saltyPreference}, #{oilPreference}, #{allergyIngredients}, #{dietaryRestrictions}, #{frequentDishes}, #{nativePlace}, #{preference}, NOW(), NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(UserProfile userProfile);
 
@@ -53,6 +53,7 @@ public interface UserProfileMapper {
             "    <if test='visitCount != null'>visit_count = #{visitCount},</if>" +
             "    <if test='lastVisitTime != null'>last_visit_time = #{lastVisitTime},</if>" +
             "    <if test='nativePlace != null'>native_place = #{nativePlace},</if>" +
+            "    <if test='preference != null'>preference = #{preference},</if>" +
             "</set>" +
             "WHERE id = #{id} AND deleted_at IS NULL" +
             "</script>")

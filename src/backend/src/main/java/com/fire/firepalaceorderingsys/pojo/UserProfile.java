@@ -88,4 +88,10 @@ public class UserProfile {
      * 用户籍贯
      */
     private String nativePlace;
+
+    /**
+     * 用户偏好（JSON格式）
+     */
+    @ValidJson
+    private String preference;
 }
