@@ -13,6 +13,8 @@ import com.fire.firepalaceorderingsys.pojo.AssignInfo;
 import com.fire.firepalaceorderingsys.pojo.Order;
 import com.fire.firepalaceorderingsys.pojo.Room;
 import com.fire.firepalaceorderingsys.pojo.UserProfile;
+import com.fire.firepalaceorderingsys.service.AiRecommendLogService;
+import com.fire.firepalaceorderingsys.service.OrderItemService;
 import com.fire.firepalaceorderingsys.service.OrderService;
 import com.fire.firepalaceorderingsys.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private AssignInfoMapper assignInfoMapper;
+    
+    @Autowired
+    private OrderItemService orderItemService;
+    
+    @Autowired
+    private AiRecommendLogService aiRecommendLogService;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /**
      * 生成订单号：orNo-随机数
@@ -365,6 +376,62 @@ public class OrderServiceImpl implements OrderService {
             // 更新失败不影响下单流程，只记录日志
             log.error("更新用户常点菜品失败: userId={}, orderId={}, error={}",
                     userId, orderId, e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 餐前分析校验
+     * 获取订单的购物车商品列表和AI推荐偏好，打包发送给AI校验服务
+     */
+    @Override
+    public Object preMealAnalysis(Long orderId) {
+        try {
+            // 1. 获取订单信息
+            Order order = orderMapper.selectById(orderId);
+            if (order == null) {
+                throw new BusinessException("订单不存在");
+            }
+            
+            // 2. 获取购物车中的商品列表
+            List<com.fire.firepalaceorderingsys.pojo.OrderItem> cartItems = orderItemService.getCartItems(orderId);
+            
+            // 3. 获取AI推荐日志的pre_tag字段
+            com.fire.firepalaceorderingsys.pojo.AiRecommendLog aiRecommendLog = aiRecommendLogService.getAiRecommendLogByOrderId(orderId);
+            String preTag = aiRecommendLog != null ? aiRecommendLog.getPreTag() : null;
+            
+            // 4. 构建请求数据
+            java.util.Map<String, Object> requestData = new java.util.HashMap<>();
+            requestData.put("orderId", orderId);
+            requestData.put("userId", order.getUserId());
+            requestData.put("cartItems", cartItems);
+            requestData.put("preTag", preTag);
+            
+            // 5. 将请求数据转换为JSON格式
+            String requestJson = objectMapper.writeValueAsString(requestData);
+            
+            // 6. 待接入AI校验
+            // 这里应该调用AI校验服务，但暂时空出三行
+            // 
+            // 
+            // 
+            
+            // 7. 模拟AI校验返回结果
+            // 实际应该调用AI服务并获取返回结果，这里先模拟一个返回结果
+            java.util.Map<String, Object> aiResponse = new java.util.HashMap<>();
+            aiResponse.put("status", "success");
+            aiResponse.put("message", "餐前分析完成");
+            java.util.Map<String, Object> analysis = new java.util.HashMap<>();
+            analysis.put("totalItems", cartItems.size());
+            analysis.put("totalPrice", orderItemService.calculateCartTotal(orderId));
+            analysis.put("recommendations", java.util.List.of("建议增加一个蔬菜", "菜品搭配合理"));
+            analysis.put("warnings", java.util.List.of());
+            analysis.put("score", 85);
+            aiResponse.put("analysis", analysis);
+            
+            // 8. 返回AI校验结果
+            return aiResponse;
+        } catch (Exception e) {
+            throw new BusinessException("餐前分析失败: " + e.getMessage());
         }
     }
 }
